@@ -7,7 +7,6 @@ ADAFRUIT_IO_KEY = 'xxxxx'
 ADAFRUIT_IO_USERNAME = 'sarahselby'
 FEED_ID = 'video-group-2'
 media_player = vlc.MediaPlayer()
-file_name = "happy.mp4"
 screenOne = ["happy.mp4", "sad.mp4"]
 
 def chooseVideo(mess):
