@@ -6,7 +6,7 @@ mood = input("Enter your mood (happy or sad): ")
 if mood == "happy":
     file_name = "happy.mp4"
 else:
-    file_name = "https://youtu.be/eX2qFMC8cFo"
+    file_name = "sad.mp4"
 
 #file_name = "happy1.mp4"
 window_name = "window"
@@ -20,8 +20,13 @@ if not cap.isOpened():
 cv2.namedWindow(window_name, cv2.WND_PROP_FULLSCREEN)
 cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
+def make_480p():
+    cap.set(3, 640)
+    cap.set(4, 480)
+
 try:
     while (True):
+        make_480p()
         ret, frame = cap.read()
         if not ret:
             print("Reached end of video, exiting.")
