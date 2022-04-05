@@ -14,6 +14,8 @@ def chooseVideo(mess):
     media = vlc.Media(file_name)
     media_player.set_media(media)
     media_player.media_player.set_fullscreen(True)
+    media_player.play()
+    time.sleep(10)
 
 def connected(client):
     print('Connected to Adafruit IO!  Listening for {0} changes...'.format(FEED_ID))
@@ -29,11 +31,6 @@ def disconnected(client):
 def message(client, feed_id, payload):
     print('Feed {0} received new value: {1}'.format(feed_id, payload))
     chooseVideo(payload)
-    except KeyboardInterrupt:
-        pass
-
-    cap.release()
-    cv2.destroyAllWindows()
 
 client = MQTTClient(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 
