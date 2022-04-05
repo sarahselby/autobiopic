@@ -1,7 +1,7 @@
 import cv2
 if __name__ == '__main__' :
 
-    video = cv2.VideoCapture("video.mp4");
+    video = cv2.VideoCapture("happy.mp4");
 
     # Find OpenCV version
     (major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
