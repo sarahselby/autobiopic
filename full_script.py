@@ -2,20 +2,28 @@ import sys
 from Adafruit_IO import MQTTClient
 import vlc
 import time
+import random
 
 ADAFRUIT_IO_KEY = 'xxxxx'
 ADAFRUIT_IO_USERNAME = 'sarahselby'
 FEED_ID = 'video-group-2'
 media_player = vlc.MediaPlayer()
+media_player.media_player.set_fullscreen(True)
 screenOne = ["happy.mp4", "sad.mp4"]
 
 def chooseVideo(mess):
-    file_name = screenOne[mess]
+#     file_name = screenOne[mess]
+    file_name = screenOne[random.randint(0, 1)]
     media = vlc.Media(file_name)
     media_player.set_media(media)
-    media_player.media_player.set_fullscreen(True)
-    media_player.play()
-    time.sleep(10)
+    playVideo()
+    
+def playVideo():
+    try:
+        media_player.play()
+        time.sleep(10)
+    except KeyboardInterrupt:
+        pass
 
 def connected(client):
     print('Connected to Adafruit IO!  Listening for {0} changes...'.format(FEED_ID))
@@ -40,5 +48,4 @@ client.on_message    = message
 client.on_subscribe  = subscribe
 
 client.connect()
-
 client.loop_blocking()
