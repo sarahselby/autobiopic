@@ -9,7 +9,7 @@ ADAFRUIT_IO_USERNAME = 'sarahselby'
 FEED_ID = 'video-group-2'
 media_player = vlc.MediaPlayer()
 media_player.media_player.set_fullscreen(True)
-screenOne = ["happy.mp4", "sad.mp4"]
+screenOne = ["boat.mp4", "dancinginatshirt.mp4", "drinksinpark.mp4", "fishing.mp4", "friends.mp4", "girlridingbike.mp4"]
 
 def chooseVideo(mess):
 #     file_name = screenOne[mess]
