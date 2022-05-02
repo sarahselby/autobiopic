@@ -4,16 +4,15 @@ import vlc
 import time
 import random
 
+# change this to Freya's AdafruitIO credentials 
 ADAFRUIT_IO_KEY = 'xxxxx'
-ADAFRUIT_IO_USERNAME = 'sarahselby'
+ADAFRUIT_IO_USERNAME = 'xxxxx'
 FEED_ID = 'video-group-2'
 media_player = vlc.MediaPlayer()
-media_player.media_player.set_fullscreen(True)
-screenOne = ["boat.mp4", "dancinginatshirt.mp4", "drinksinpark.mp4", "fishing.mp4", "friends.mp4", "girlridingbike.mp4"]
+media_player.set_fullscreen(True)
 
 def chooseVideo(mess):
-#     file_name = screenOne[mess]
-    file_name = screenOne[random.randint(0, 1)]
+    file_name = 'videos/' + mess + '.mp4'
     media = vlc.Media(file_name)
     media_player.set_media(media)
     playVideo()
