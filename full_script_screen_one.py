@@ -5,9 +5,9 @@ import time
 import random
 
 # change this to Freya's AdafruitIO credentials 
-ADAFRUIT_IO_KEY = 'xxxxx'
-ADAFRUIT_IO_USERNAME = 'xxxxx'
-FEED_ID = 'video-group-2'
+ADAFRUIT_IO_KEY = 'aio_UWqk37hVY7fISrVWw45jTGHMBEhB'
+ADAFRUIT_IO_USERNAME = 'freyawhite24'
+FEED_ID = 'auto-biopic-1'
 media_player = vlc.MediaPlayer()
 media_player.set_fullscreen(True)
 
