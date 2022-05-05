@@ -1,0 +1,95 @@
+import sys
+from Adafruit_IO import MQTTClient
+import vlc
+import time
+import os
+
+ADAFRUIT_IO_KEY = 'aio_hZpo76MFMCndApBAxbpZVjN6Zacv'
+ADAFRUIT_IO_USERNAME = 'sarahselby'
+FEED_ID = 'video-group-2'
+
+files = [] 
+instances = []
+medias = []
+players = []
+awaitingVisitor = True
+print("File list size is " + str(len(files)))
+
+def popUp(mess):
+    video_path = 'videos/' + mess + '.mp4'
+    os.popen(['vlc',video_path,'--fullscreen','--play-and-exit'])
+
+def showWelcomeScreen():
+    media_player = vlc.MediaPlayer()
+    media_player.toggle_fullscreen()
+    media = vlc.Media("intro.png")
+    media_player.set_media(media)
+    if awaitingVisitor == True:
+        media_player.play()
+
+def showExitScreen():
+    media_player = vlc.MediaPlayer()
+    media_player.set_fullscreen(True)
+    media = vlc.Media("outro.png")
+    media_player.set_media(media)
+    media_player.play()
+    time.sleep(10)
+    awaitingVisitor = True
+    showWelcomeScreen()
+
+def createVids():
+    for idx, fname in enumerate(files):
+        print("Loading",fname)
+        instances.append(vlc.Instance())
+        medias.append(instances[idx].media_new(fname))
+        players.append(vlc.MediaPlayer())
+        players[idx].set_media(medias[idx])
+        players[idx].toggle_fullscreen()
+    playVideos()
+
+def emptyFiles():
+#    for file in files:
+#        files.remove(file)
+    files.clear()
+    print("Emptied files. List size is now " + str(len(files)))
+    showExitScreen()
+
+def playVideos():
+    player_count = len(players)
+    for playa in range(player_count):
+        players[playa].play()
+        time.sleep(0.5)
+        while players[playa].is_playing():
+            time.sleep(0.5)
+    emptyFiles()
+
+def connected(client):
+    print('Connected to Adafruit IO!  Listening for {0} changes...'.format(FEED_ID))
+    client.subscribe(FEED_ID)
+
+def subscribe(client, userdata, mid, granted_qos):
+    print('Subscribed to {0} with QoS {1}'.format(FEED_ID, granted_qos[0]))
+
+def disconnected(client):
+    print('Disconnected from Adafruit IO!')
+    sys.exit(1)
+
+def message(client, feed_id, payload):
+    print('Feed {0} received new value: {1}'.format(feed_id, payload))
+    files.append('summer/' + payload + '.mp4')
+    print(files)
+    print("file length is " + str(len(files)))
+    popUp(payload)
+    if len(files) >= 3:
+        awaitingVisitor = False
+        createVids()
+
+showWelcomeScreen()
+client = MQTTClient(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
+client.on_connect    = connected
+client.on_disconnect = disconnected
+client.on_message    = message
+client.on_subscribe  = subscribe
+client.connect()
+client.loop_blocking()
+
