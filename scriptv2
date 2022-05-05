@@ -4,8 +4,8 @@ import vlc
 import time
 import os
 
-ADAFRUIT_IO_KEY = 'aio_hZpo76MFMCndApBAxbpZVjN6Zacv'
-ADAFRUIT_IO_USERNAME = 'sarahselby'
+ADAFRUIT_IO_KEY = xxxxx
+ADAFRUIT_IO_USERNAME = xxxxx
 FEED_ID = 'video-group-2'
 
 files = [] 
